@@ -1,0 +1,102 @@
+.story{
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+    background-color: rgba($color-white, 0.6);
+    border-radius: 3px;
+    padding: 7rem;
+    padding-left: 9rem;
+    font-size: $default-font-size;
+    transform: skewX(-12deg);
+
+    @include respond(tab-port){
+        width: 100%;
+        margin: 0 5%;
+        padding: 5rem;
+        padding-left: 7rem;
+    }
+
+    @include respond(phone){
+        transform: skewX(0deg); 
+    }
+
+    
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        overflow: hidden;
+        float: left;
+        border-radius: 50%;
+        //instead of using marings, in case of shapes it is better to use transform
+        transform: translateX(-3rem) skewX(12deg);
+        position: relative;
+
+        @include respond(phone){
+            transform: translateX(-3rem) skewX(0deg); 
+        }
+
+        @supports(clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%)) or (-webkit-clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%)){
+            
+            
+        //for this to work the element must be floated + defined height and width, in Safari only works in Safari. This together with the float property
+        // causes the neighbouring element to wrap around in a circular shape
+            *-webkit-shape-outside: circle(50% at 50% 50%);
+            shape-outside: circle(50% at 50% 50%); 
+        //here we make the shape a circle
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);
+            border-radius: none;
+        }
+
+        
+    }
+
+    &__img{
+        //using height instead of width because the photo is a horizontal rectangle
+        height: 100%;
+        transform: translateX(-3rem) scale(1.4);
+        transition: all 0.3s ease-in-out;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    &__text {
+        transform: skewX(12deg);
+
+        @include respond(phone){
+            transform: skewX(0deg); 
+        }
+
+        
+    }
+
+    &__caption{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -30%);
+        color: $color-white;
+        text-transform: uppercase;
+        text-align: center;
+        transition: all .5s;
+        opacity: 0;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+
+    }
+
+    &:hover &__caption {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+        
+        
+    }
+
+    &:hover &__img {
+        transform: translateX(-3rem) scale(1);
+        filter: blur(3px) brightness(80%);
+        
+    }
+}
